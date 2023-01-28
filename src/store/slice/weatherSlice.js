@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  hasError: false,
   cityName: '',
   forcastDays: [],
   selectedWeather: {
@@ -18,6 +19,7 @@ const weatherSlice = createSlice({
   reducers: {
     setCityName: (state, action) => {
       state.cityName = action.payload;
+      state.hasError = false;
     },
     setForcastDays: (state, action) => {
       state.forcastDays = action.payload;
@@ -25,9 +27,25 @@ const weatherSlice = createSlice({
     setSelectedWeather: (state, action) => {
       state.selectedWeather = action.payload;
     },
+    resetWeather: (state) => {
+      state.cityName = '';
+      state.forcastDays = [];
+      state.selectedWeather = {
+        date: '',
+        temp: 0,
+        humidity: 0,
+        wind: 0,
+        hoursData: [],
+      };
+      state.hasError = false;
+    },
+    setError: (state, action) => {
+      state.hasError = true;
+    },
   },
 });
 
-export const { setCityName, setForcastDays, setSelectedWeather } = weatherSlice.actions;
+export const { setCityName, setForcastDays, setSelectedWeather, resetWeather, setError } =
+  weatherSlice.actions;
 
 export default weatherSlice.reducer;
